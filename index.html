@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E.S.T — Engineering Support Troop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="EST.png" type="image/png" id="favicon-link">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ===================== MATRIX RAIN CANVAS ===================== -->
+    <canvas id="matrix-rain"></canvas>
+
+    <!-- ===================== FLOATING PARTICLES ===================== -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ===================== SCAN LINE ===================== -->
+    <div id="scan-line"></div>
+
+    <!-- ===================== CURSOR GLOW ===================== -->
+    <div id="cursor-glow"></div>
+
+    <!-- ===================== NAV BAR ===================== -->
+    <nav class="top-bar">
+        <div class="logo-area">
+            <img src="EST.png" alt="E.S.T Logo" class="logo-img" id="top-bar-logo" onerror="this.style.display='none'">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#who-we-are">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#org-structure">Team Structure</a></li>
+            <li><a href="#front-door">Front Door</a></li>
+            <li><a href="#where-we-sit">Where We Sit</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#successes">Successes</a></li>
+            <li><a href="#stats">Statistics</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#" id="admin-login-btn" class="nav-admin-btn">Admin</a></li>
+        </ul>
+        <img src="O3.png" alt="O3 Logo" class="top-bar-right-logo" id="top-bar-right-logo" onerror="this.style.display='none'">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">&#9776;</button>
+    </nav>
+
+    <!-- ===================== HERO / HEADER ===================== -->
+    <header id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-grid-bg"></div>
+        <div class="hero-content">
+            <div class="hero-terminal-line">
+                <span class="terminal-prompt">root@esector:~$</span>
+                <span class="typewriter" id="typewriter-text"></span>
+                <span class="cursor-blink">|</span>
+            </div>
+            <div class="hero-main-logo-container">
+                <img src="EST.png" alt="E.S.T Logo" class="hero-main-logo" id="hero-logo-img" onerror="this.style.display='none'">
+            </div>
+            <p class="hero-subtitle" id="hero-subtitle"></p>
+            <div class="hero-tags" id="hero-tags"></div>
+        </div>
+    </header>
+
+    <!-- ===================== WHO WE ARE ===================== -->
+    <section id="who-we-are" class="section">
+        <div class="container">
+            <h2 class="section-title" data-title-key="whoWeAre"></h2>
+            <div class="who-we-are-content">
+                <p id="who-we-are-text"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SERVICES WE OFFER ===================== -->
+    <section id="services" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="services"></h2>
+            <div class="about-grid" id="services-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ORG STRUCTURE ===================== -->
+    <section id="org-structure" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="orgStructure"></h2>
+            <div class="org-chart" id="org-chart">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FRONT DOOR PORTAL ===================== -->
+    <section id="front-door" class="section">
+        <div class="container">
+            <h2 class="section-title" data-title-key="frontDoor"></h2>
+            <div class="front-door-card">
+                <div class="front-door-icon">&#128682;</div>
+                <h3 id="front-door-title"></h3>
+                <p id="front-door-desc"></p>
+                <div class="front-door-steps front-door-steps-3" id="front-door-steps">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="front-door-actions">
+                    <a href="#" class="btn btn-primary" id="front-door-email-btn">
+                        &#9993; Contact us via Email
+                    </a>
+                    <a href="#" class="btn btn-secondary" id="front-door-portal-btn">
+                        &#127760; Open Portal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== WHERE WE SIT ===================== -->
+    <section id="where-we-sit" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Where We Sit</h2>
+            <div class="org-chain-wrapper">
+                <div class="org-chain" id="where-we-sit-chain">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CURRENT PROJECTS ===================== -->
+    <section id="projects" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="projects"></h2>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PROJECT SUCCESSES ===================== -->
+    <section id="successes" class="section">
+        <div class="container">
+            <h2 class="section-title" data-title-key="successes"></h2>
+            <div class="successes-grid" id="successes-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 id="modal-title"></h2>
+            <div class="modal-meta" id="modal-meta"></div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ===================== PREVIOUS PROJECTS ===================== -->
+    <section id="previous-projects" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="prevProjects"></h2>
+            <div class="prev-projects-list" id="prev-projects-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== STATISTICS ===================== -->
+    <section id="stats" class="section">
+        <div class="container">
+            <h2 class="section-title" data-title-key="stats"></h2>
+            <div class="stats-dashboard">
+                <div class="stats-charts">
+                    <div class="chart-container">
+                        <h3>Tag Distribution</h3>
+                        <canvas id="platform-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Tag Frequency</h3>
+                        <canvas id="engagement-chart"></canvas>
+                    </div>
+                </div>
+                <div class="stats-counters" id="stats-counters">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== IMPORTANT LINKS ===================== -->
+    <section id="links" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="links"></h2>
+            <div class="links-grid" id="links-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="footer-year"></span> <span id="footer-text"></span></p>
+        </div>
+    </footer>
+
+    <!-- ===================== ADMIN LOGIN MODAL ===================== -->
+    <div class="modal-overlay" id="admin-login-modal">
+        <div class="modal admin-login-form">
+            <button class="modal-close" id="admin-login-close">&times;</button>
+            <h2>&#128274; Admin Login</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-user">Username</label>
+                    <input type="text" id="admin-user" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-pass">Password</label>
+                    <input type="password" id="admin-pass" autocomplete="current-password" required>
+                </div>
+                <p class="login-error" id="login-error"></p>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================== ADMIN PANEL ===================== -->
+    <div id="admin-panel" class="admin-panel hidden">
+        <div class="admin-header">
+            <h2>&#9881; E.S.T Admin Panel</h2>
+            <button class="btn btn-secondary" id="admin-logout-btn">Logout</button>
+        </div>
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="admin-site-content">Site Content</button>
+            <button class="admin-tab" data-tab="admin-services">Services</button>
+            <button class="admin-tab" data-tab="admin-leadership">Leadership</button>
+            <button class="admin-tab" data-tab="admin-projects">Current Projects</button>
+            <button class="admin-tab" data-tab="admin-successes">Successes</button>
+            <button class="admin-tab" data-tab="admin-prev-projects">Previous Projects</button>
+            <button class="admin-tab" data-tab="admin-org-groups">Team Structure</button>
+            <button class="admin-tab" data-tab="admin-where-we-sit">Where We Sit</button>
+            <button class="admin-tab" data-tab="admin-stats">Statistics</button>
+            <button class="admin-tab" data-tab="admin-links">Links</button>
+            <button class="admin-tab" data-tab="admin-settings">Settings</button>
+        </div>
+        <div class="admin-content">
+            <!-- Site Content Admin -->
+            <div class="admin-section active" id="admin-site-content">
+                <h3>Site Content</h3>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:0.9rem">Edit the hero banner, "Who We Are" description, front door portal content, section headings, and footer text.</p>
+                <div id="admin-site-content-form"></div>
+            </div>
+            <!-- Services Admin -->
+            <div class="admin-section" id="admin-services">
+                <h3>Manage Services</h3>
+                <div id="admin-services-list"></div>
+                <button class="btn btn-primary" id="add-service-btn">+ Add Service</button>
+            </div>
+            <!-- Leadership Admin -->
+            <div class="admin-section" id="admin-leadership">
+                <h3>Manage Team Leadership</h3>
+                <div id="admin-leadership-list"></div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn btn-primary" id="add-leader-top-btn">+ Add to Top Row (Sector Leads)</button>
+                    <button class="btn btn-primary" id="add-leader-mid-btn">+ Add to Middle Row (Management)</button>
+                    <button class="btn btn-primary" id="add-leader-bottom-btn">+ Add to Bottom Row (Tech Leads)</button>
+                </div>
+            </div>
+            <!-- Projects Admin -->
+            <div class="admin-section" id="admin-projects">
+                <h3>Manage Current Projects</h3>
+                <div id="admin-projects-list"></div>
+                <button class="btn btn-primary" id="add-project-btn">+ Add Project</button>
+            </div>
+            <!-- Successes Admin -->
+            <div class="admin-section" id="admin-successes">
+                <h3>Manage Project Successes</h3>
+                <div id="admin-successes-list"></div>
+                <button class="btn btn-primary" id="add-success-btn">+ Add Success</button>
+            </div>
+            <!-- Previous Projects Admin -->
+            <div class="admin-section" id="admin-prev-projects">
+                <h3>Manage Previous Projects</h3>
+                <div id="admin-prev-projects-list"></div>
+                <button class="btn btn-primary" id="add-prev-project-btn">+ Add Previous Project</button>
+            </div>
+            <!-- Org Groups Admin -->
+            <div class="admin-section" id="admin-org-groups">
+                <h3>Manage Team Structure Groups</h3>
+                <p style="color:var(--text-secondary);margin-bottom:12px;font-size:0.9rem">Add, edit, or remove the team resource groups shown below the Tech Leads in the org chart.</p>
+                <p style="color:var(--accent-dim);margin-bottom:20px;font-size:0.85rem">&#9432; Management positions (Sector Lead, Project Manager, Tech Leads) are managed under the <strong>Leadership</strong> tab.</p>
+                <div id="admin-org-groups-list"></div>
+                <button class="btn btn-primary" id="add-org-group-btn">+ Add Group</button>
+            </div>
+            <!-- Where We Sit Admin -->
+            <div class="admin-section" id="admin-where-we-sit">
+                <h3>Manage Where We Sit</h3>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:0.9rem">Edit the organisational chain shown in the "Where We Sit" section. The last item is highlighted as "You are here".</p>
+                <div id="admin-where-we-sit-list"></div>
+                <button class="btn btn-primary" id="add-where-we-sit-btn">+ Add Node</button>
+            </div>
+            <!-- Stats Admin -->
+            <div class="admin-section" id="admin-stats">
+                <h3>Manage Statistics</h3>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:0.9rem">Charts are auto-generated from project tags. Counters below are manually editable.</p>
+                <div id="admin-stats-form"></div>
+            </div>
+            <!-- Links Admin -->
+            <div class="admin-section" id="admin-links">
+                <h3>Manage Important Links</h3>
+                <div id="admin-links-list"></div>
+                <button class="btn btn-primary" id="add-link-btn">+ Add Link</button>
+            </div>
+            <!-- Settings Admin -->
+            <div class="admin-section" id="admin-settings">
+                <h3>General Settings</h3>
+                <h4 style="margin:0 0 12px;color:var(--accent)">Logo Images</h4>
+                <p style="color:var(--text-secondary);margin-bottom:16px;font-size:0.85rem">Upload .png images or enter a filename for logos.</p>
+                <div class="form-group">
+                    <label>Top Bar Logo</label>
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                        <img id="setting-top-bar-logo-preview" src="EST.png" alt="Preview" style="height:48px;width:auto;border-radius:8px;background:var(--bg-glass);border:1px solid var(--border)">
+                        <label class="btn btn-secondary" style="cursor:pointer;margin:0;font-size:0.8rem;padding:6px 14px">
+                            Upload .png
+                            <input type="file" id="setting-top-bar-logo-file" accept=".png,image/png" style="display:none">
+                        </label>
+                        <button class="btn btn-secondary" id="reset-top-bar-logo" style="font-size:0.8rem;padding:6px 14px" title="Reset to default EST.png">Reset</button>
+                    </div>
+                    <input type="text" id="setting-top-bar-logo" class="admin-input" placeholder="EST.png" style="font-size:0.8rem">
+                </div>
+                <div class="form-group">
+                    <label>Hero Section Logo</label>
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                        <img id="setting-hero-logo-preview" src="EST.png" alt="Preview" style="height:48px;width:auto;border-radius:8px;background:var(--bg-glass);border:1px solid var(--border)">
+                        <label class="btn btn-secondary" style="cursor:pointer;margin:0;font-size:0.8rem;padding:6px 14px">
+                            Upload .png
+                            <input type="file" id="setting-hero-logo-file" accept=".png,image/png" style="display:none">
+                        </label>
+                        <button class="btn btn-secondary" id="reset-hero-logo" style="font-size:0.8rem;padding:6px 14px" title="Reset to default EST.png">Reset</button>
+                    </div>
+                    <input type="text" id="setting-hero-logo" class="admin-input" placeholder="EST.png" style="font-size:0.8rem">
+                </div>
+                <div class="form-group">
+                    <label>Title Bar Right Logo (e.g. O3)</label>
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+                        <img id="setting-right-logo-preview" src="O3.png" alt="Preview" style="height:48px;width:auto;border-radius:8px;background:var(--bg-glass);border:1px solid var(--border)">
+                        <label class="btn btn-secondary" style="cursor:pointer;margin:0;font-size:0.8rem;padding:6px 14px">
+                            Upload .png
+                            <input type="file" id="setting-right-logo-file" accept=".png,image/png" style="display:none">
+                        </label>
+                        <button class="btn btn-secondary" id="reset-right-logo" style="font-size:0.8rem;padding:6px 14px" title="Reset to default O3.png">Reset</button>
+                    </div>
+                    <input type="text" id="setting-right-logo" class="admin-input" placeholder="O3.png" style="font-size:0.8rem">
+                </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">General</h4>
+                <div class="form-group">
+                    <label>Page Title (browser tab)</label>
+                    <input type="text" id="setting-page-title" class="admin-input">
+                </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">Front Door</h4>
+                <div class="form-group">
+                    <label>Front Door Email Address</label>
+                    <input type="email" id="setting-email" class="admin-input">
+                </div>
+                <div class="form-group">
+                    <label>Email Subject Line</label>
+                    <input type="text" id="setting-email-subject" class="admin-input">
+                </div>
+                <div class="form-group">
+                    <label>Email Body Template</label>
+                    <textarea id="setting-email-body" class="admin-input" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Front Door Portal URL</label>
+                    <input type="url" id="setting-portal-url" class="admin-input">
+                </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">Where We Sit</h4>
+                <div class="form-group">
+                    <label>"You are here" Badge Text</label>
+                    <input type="text" id="setting-you-are-here" class="admin-input">
+                </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">Admin Credentials</h4>
+                <div class="form-group">
+                    <label>Admin Username</label>
+                    <input type="text" id="setting-admin-user" class="admin-input">
+                </div>
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" id="setting-admin-pass" class="admin-input">
+                </div>
+                <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
