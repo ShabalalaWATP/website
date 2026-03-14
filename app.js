@@ -272,23 +272,24 @@
         const topTier = data.leadership.filter(l => l.tier === 'top').sort(sortByOrder);
         const midTier = data.leadership.filter(l => l.tier === 'middle').sort(sortByOrder);
         const tls = data.leadership.filter(l => l.tier === 'bottom').sort(sortByOrder);
+        const s = data.settings || {};
         if (topTier.length) {
-            html += '<div class="org-label">Sector Leads</div><div class="org-level org-top-level">';
+            html += `<div class="org-label">${escHtml(s.orgLabelTop || 'Sector Leads')}</div><div class="org-level org-top-level">`;
             topTier.forEach(l => { html += leaderOrgNodeHtml(l, 'org-node-lead'); });
             html += '</div><div class="org-branch-line"></div>';
         }
         if (midTier.length) {
-            html += '<div class="org-label">Project Management</div><div class="org-level">';
+            html += `<div class="org-label">${escHtml(s.orgLabelMiddle || 'Project Management')}</div><div class="org-level">`;
             midTier.forEach(l => { html += leaderOrgNodeHtml(l, 'org-node-lead'); });
             html += '</div><div class="org-branch-line"></div>';
         }
         if (tls.length) {
-            html += '<div class="org-label">Tech Leads</div><div class="org-level">';
+            html += `<div class="org-label">${escHtml(s.orgLabelBottom || 'Tech Leads')}</div><div class="org-level">`;
             tls.forEach(l => { html += leaderOrgNodeHtml(l, 'org-node-tech'); });
             html += '</div><div class="org-branch-line"></div>';
         }
         if (data.orgGroups && data.orgGroups.length) {
-            html += '<div class="org-label">Team Resources</div><div class="org-level org-groups-level">';
+            html += `<div class="org-label">${escHtml(s.orgLabelResources || 'Team Resources')}</div><div class="org-level org-groups-level">`;
             data.orgGroups.forEach(g => {
                 const tc = g.type === 'staff' ? '' : g.type === 'military' ? 'military' : g.type === 'contractor' ? 'contractor' : 'partner';
                 html += `<div class="org-node org-group-card ${tc}">`;
@@ -356,7 +357,9 @@
     function renderProjects() {
         document.getElementById('projects-grid').innerHTML = data.projects.map(p => {
             const sc = p.status === 'active' ? 'status-active' : p.status === 'planning' ? 'status-planning' : 'status-review';
-            return `<div class="project-card"><span class="project-status ${sc}">${escHtml(p.status)}</span><h4>${escHtml(p.name)}</h4><p>${escHtml(p.description)}</p><div class="project-tags">${(p.tags || []).map(t => `<span class="project-tag">${escHtml(t)}</span>`).join('')}</div></div>`;
+            const pmLine = p.pm ? `<div class="project-pm">PM: ${escHtml(p.pm)}</div>` : '';
+            const inner = `<span class="project-status ${sc}">${escHtml(p.status)}</span><h4>${escHtml(p.name)}</h4>${pmLine}<p>${escHtml(p.description)}</p><div class="project-tags">${(p.tags || []).map(t => `<span class="project-tag">${escHtml(t)}</span>`).join('')}</div>`;
+            return p.link && p.link !== '#' ? `<a class="project-card project-card-link" href="${escHtml(p.link)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="project-card">${inner}</div>`;
         }).join('');
     }
 
@@ -660,12 +663,12 @@
     // ================================================================
     function renderAdminProjects() {
         const list = document.getElementById('admin-projects-list');
-        list.innerHTML = data.projects.map((p, i) => `<div class="admin-item-card"><div class="admin-item-header"><h4>${escHtml(p.name)}</h4><div class="admin-item-actions"><button class="btn btn-sm btn-secondary admin-edit-project" data-index="${i}">Edit</button><button class="btn btn-sm btn-danger admin-del-project" data-index="${i}">Delete</button></div></div><div class="admin-edit-form" id="edit-project-${i}" style="display:none"><div class="form-group"><label>Name</label><input class="admin-input" value="${escHtml(p.name)}" data-field="name"></div><div class="form-group"><label>Description</label><textarea class="admin-input admin-textarea" data-field="description">${escHtml(p.description)}</textarea></div><div class="form-group"><label>Status (active/planning/review)</label><input class="admin-input" value="${escHtml(p.status)}" data-field="status"></div><div class="form-group"><label>Tags (comma separated)</label><input class="admin-input" value="${(p.tags || []).join(', ')}" data-field="tags"></div><button class="btn btn-sm btn-primary admin-save-project" data-index="${i}">Save</button></div></div>`).join('');
+        list.innerHTML = data.projects.map((p, i) => `<div class="admin-item-card"><div class="admin-item-header"><h4>${escHtml(p.name)}</h4><div class="admin-item-actions"><button class="btn btn-sm btn-secondary admin-edit-project" data-index="${i}">Edit</button><button class="btn btn-sm btn-danger admin-del-project" data-index="${i}">Delete</button></div></div><div class="admin-edit-form" id="edit-project-${i}" style="display:none"><div class="form-group"><label>Name</label><input class="admin-input" value="${escHtml(p.name)}" data-field="name"></div><div class="form-group"><label>Description</label><textarea class="admin-input admin-textarea" data-field="description">${escHtml(p.description)}</textarea></div><div class="form-group"><label>Project Manager</label><input class="admin-input" value="${escHtml(p.pm || '')}" data-field="pm" placeholder="e.g. Connor Goldson"></div><div class="form-group"><label>Status (active/planning/review)</label><input class="admin-input" value="${escHtml(p.status)}" data-field="status"></div><div class="form-group"><label>Tags (comma separated)</label><input class="admin-input" value="${(p.tags || []).join(', ')}" data-field="tags"></div><div class="form-group"><label>Link URL (optional)</label><input class="admin-input" value="${escHtml(p.link || '')}" data-field="link" placeholder="https://..."></div><button class="btn btn-sm btn-primary admin-save-project" data-index="${i}">Save</button></div></div>`).join('');
         list.querySelectorAll('.admin-edit-project').forEach(b => b.addEventListener('click', () => { const f = document.getElementById('edit-project-' + b.dataset.index); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }));
-        list.querySelectorAll('.admin-save-project').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index), f = document.getElementById('edit-project-' + i); f.querySelectorAll('[data-field]').forEach(inp => { if (inp.dataset.field === 'tags') data.projects[i].tags = inp.value.split(',').map(t => t.trim()).filter(Boolean); else data.projects[i][inp.dataset.field] = inp.value; }); saveSiteData(data); renderAdminProjects(); toast('Project updated'); }));
-        list.querySelectorAll('.admin-del-project').forEach(b => b.addEventListener('click', () => { if (!confirm('Delete?')) return; data.projects.splice(parseInt(b.dataset.index), 1); saveSiteData(data); renderAdminProjects(); toast('Project deleted'); }));
+        list.querySelectorAll('.admin-save-project').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index), f = document.getElementById('edit-project-' + i); f.querySelectorAll('[data-field]').forEach(inp => { if (inp.dataset.field === 'tags') data.projects[i].tags = inp.value.split(',').map(t => t.trim()).filter(Boolean); else data.projects[i][inp.dataset.field] = inp.value; }); saveSiteData(data); renderAdminProjects(); renderStats(); toast('Project updated'); }));
+        list.querySelectorAll('.admin-del-project').forEach(b => b.addEventListener('click', () => { if (!confirm('Delete?')) return; data.projects.splice(parseInt(b.dataset.index), 1); saveSiteData(data); renderAdminProjects(); renderStats(); toast('Project deleted'); }));
     }
-    document.getElementById('add-project-btn').addEventListener('click', () => { data.projects.push({ id: uid(), name: 'New Project', description: 'Description...', status: 'planning', tags: [] }); saveSiteData(data); renderAdminProjects(); toast('Project added'); });
+    document.getElementById('add-project-btn').addEventListener('click', () => { data.projects.push({ id: uid(), name: 'New Project', description: 'Description...', status: 'planning', tags: [] }); saveSiteData(data); renderAdminProjects(); renderStats(); toast('Project added'); });
 
     // ================================================================
     //  ADMIN: SUCCESSES
@@ -687,10 +690,10 @@
         const list = document.getElementById('admin-prev-projects-list');
         list.innerHTML = data.previousProjects.map((p, i) => `<div class="admin-item-card"><div class="admin-item-header"><h4>${escHtml(p.name)}</h4><div class="admin-item-actions"><button class="btn btn-sm btn-secondary admin-edit-pp" data-index="${i}">Edit</button><button class="btn btn-sm btn-danger admin-del-pp" data-index="${i}">Delete</button></div></div><div class="admin-edit-form" id="edit-pp-${i}" style="display:none"><div class="form-group"><label>Name</label><input class="admin-input" value="${escHtml(p.name)}" data-field="name"></div><div class="form-group"><label>Description</label><input class="admin-input" value="${escHtml(p.description)}" data-field="description"></div><div class="form-group"><label>Link</label><input class="admin-input" value="${escHtml(p.link)}" data-field="link"></div><div class="form-group"><label>Tags (comma separated)</label><input class="admin-input" value="${(p.tags || []).join(', ')}" data-field="tags"></div><button class="btn btn-sm btn-primary admin-save-pp" data-index="${i}">Save</button></div></div>`).join('');
         list.querySelectorAll('.admin-edit-pp').forEach(b => b.addEventListener('click', () => { const f = document.getElementById('edit-pp-' + b.dataset.index); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }));
-        list.querySelectorAll('.admin-save-pp').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index), f = document.getElementById('edit-pp-' + i); f.querySelectorAll('[data-field]').forEach(inp => { if (inp.dataset.field === 'tags') data.previousProjects[i].tags = inp.value.split(',').map(t => t.trim()).filter(Boolean); else data.previousProjects[i][inp.dataset.field] = inp.value; }); saveSiteData(data); renderAdminPrevProjects(); toast('Updated'); }));
-        list.querySelectorAll('.admin-del-pp').forEach(b => b.addEventListener('click', () => { if (!confirm('Delete?')) return; data.previousProjects.splice(parseInt(b.dataset.index), 1); saveSiteData(data); renderAdminPrevProjects(); toast('Deleted'); }));
+        list.querySelectorAll('.admin-save-pp').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index), f = document.getElementById('edit-pp-' + i); f.querySelectorAll('[data-field]').forEach(inp => { if (inp.dataset.field === 'tags') data.previousProjects[i].tags = inp.value.split(',').map(t => t.trim()).filter(Boolean); else data.previousProjects[i][inp.dataset.field] = inp.value; }); saveSiteData(data); renderAdminPrevProjects(); renderStats(); toast('Updated'); }));
+        list.querySelectorAll('.admin-del-pp').forEach(b => b.addEventListener('click', () => { if (!confirm('Delete?')) return; data.previousProjects.splice(parseInt(b.dataset.index), 1); saveSiteData(data); renderAdminPrevProjects(); renderStats(); toast('Deleted'); }));
     }
-    document.getElementById('add-prev-project-btn').addEventListener('click', () => { data.previousProjects.push({ id: uid(), name: 'New Project', description: 'Description...', link: '#', tags: [] }); saveSiteData(data); renderAdminPrevProjects(); toast('Added'); });
+    document.getElementById('add-prev-project-btn').addEventListener('click', () => { data.previousProjects.push({ id: uid(), name: 'New Project', description: 'Description...', link: '#', tags: [] }); saveSiteData(data); renderAdminPrevProjects(); renderStats(); toast('Added'); });
 
     // ================================================================
     //  ADMIN: ORG GROUPS
@@ -798,6 +801,10 @@
         document.getElementById('setting-email-body').value = data.settings.frontDoorEmailBody || '';
         document.getElementById('setting-portal-url').value = data.settings.frontDoorPortalUrl;
         document.getElementById('setting-you-are-here').value = data.settings.youAreHereBadge || '';
+        document.getElementById('setting-org-label-top').value = data.settings.orgLabelTop || 'Sector Leads';
+        document.getElementById('setting-org-label-middle').value = data.settings.orgLabelMiddle || 'Project Management';
+        document.getElementById('setting-org-label-bottom').value = data.settings.orgLabelBottom || 'Tech Leads';
+        document.getElementById('setting-org-label-resources').value = data.settings.orgLabelResources || 'Team Resources';
         document.getElementById('setting-admin-user').value = data.settings.adminUser;
         document.getElementById('setting-admin-pass').value = data.settings.adminPass;
     }
@@ -855,9 +862,13 @@
         data.settings.frontDoorEmailBody = document.getElementById('setting-email-body').value;
         data.settings.frontDoorPortalUrl = document.getElementById('setting-portal-url').value;
         data.settings.youAreHereBadge = document.getElementById('setting-you-are-here').value.trim();
+        data.settings.orgLabelTop = document.getElementById('setting-org-label-top').value.trim();
+        data.settings.orgLabelMiddle = document.getElementById('setting-org-label-middle').value.trim();
+        data.settings.orgLabelBottom = document.getElementById('setting-org-label-bottom').value.trim();
+        data.settings.orgLabelResources = document.getElementById('setting-org-label-resources').value.trim();
         data.settings.adminUser = document.getElementById('setting-admin-user').value;
         data.settings.adminPass = document.getElementById('setting-admin-pass').value;
-        saveSiteData(data); renderHero(); renderFrontDoor(); renderWhereWeSit(); toast('Settings saved');
+        saveSiteData(data); renderHero(); renderFrontDoor(); renderWhereWeSit(); renderOrgChart(); toast('Settings saved');
     });
 
     // ---- Smooth scroll for nav links ----

@@ -1126,6 +1126,7 @@ body:hover #cursor-glow { opacity: 1; }
     gap: 24px;
 }
 
+a.project-card-link { text-decoration: none; color: inherit; display: block; }
 .project-card {
     background: var(--bg-glass);
     backdrop-filter: blur(16px) saturate(160%);
@@ -1169,6 +1170,7 @@ body:hover #cursor-glow { opacity: 1; }
 
 .project-card h4 { font-size: 1.1rem; margin-bottom: 8px; }
 .project-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+.project-pm { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
 
 .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
 .project-tag {

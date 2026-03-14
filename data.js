@@ -18,7 +18,11 @@ const DEFAULT_DATA = {
         adminPass: "admin12345",
         topBarLogo: "EST.png",
         heroLogo: "EST.png",
-        topBarRightLogo: "O3.png"
+        topBarRightLogo: "O3.png",
+        orgLabelTop: "Sector Leads",
+        orgLabelMiddle: "Project Management",
+        orgLabelBottom: "Tech Leads",
+        orgLabelResources: "Team Resources"
     },
 
     // ---- Hero / Banner ----
