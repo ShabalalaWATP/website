@@ -400,7 +400,7 @@
     }
 
     function renderCharts() {
-        const cols = ['#00e5ff','#7c4dff','#00e676','#ffab00','#ff5252','#448aff','#69f0ae','#ff6e40','#40c4ff','#b388ff','#ea80fc','#84ffff','#ccff90','#ffd180'];
+        const cols = ['#00e5ff','#7c4dff','#00e676','#ffab00','#ff5252','#448aff','#69f0ae','#ff6e40','#40c4ff','#b388ff','#ea80fc','#84ffff','#ccff90','#ffd180','#f06292','#4dd0e1','#aed581','#ffcc80','#ce93d8','#80deea','#e6ee9c','#ef9a9a','#a5d6a7','#90caf9','#fff59d','#bcaaa4','#80cbc4','#f48fb1','#81d4fa','#c5e1a5','#ff8a65','#4fc3f7','#dce775','#ba68c8','#4db6ac','#e57373','#64b5f6','#fff176','#9575cd','#4dd0e1','#f06292','#aed581','#ffb74d','#7986cb','#a1887f','#81c784','#ff80ab','#80d8ff','#b9f6ca','#ffe57f'];
         const tagStats = computeTagStats();
         const tagLabels = Object.keys(tagStats);
         const tagValues = Object.values(tagStats);
@@ -420,10 +420,14 @@
         if (engagementChart) engagementChart.destroy();
         const e = document.getElementById('engagement-chart');
         if (e && tagLabels.length) {
+            // Dynamically size container so every tag bar is visible
+            const barHeight = 36;
+            const minHeight = tagLabels.length * barHeight + 40;
+            e.parentElement.style.minHeight = minHeight + 'px';
             engagementChart = new Chart(e.getContext('2d'), {
                 type: 'bar',
                 data: { labels: tagLabels, datasets: [{ data: tagValues, backgroundColor: cols.slice(0, tagLabels.length), borderRadius: 8, borderSkipped: false }] },
-                options: { responsive: true, indexAxis: 'y', animation: { duration: 1200 }, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#5a6478' }, grid: { color: 'rgba(30,42,62,0.5)' } }, y: { ticks: { color: '#8892a4', font: { size: 11 } }, grid: { display: false } } } }
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', animation: { duration: 1200 }, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#5a6478' }, grid: { color: 'rgba(30,42,62,0.5)' } }, y: { ticks: { color: '#8892a4', font: { size: 11 } }, grid: { display: false } } } }
             });
         }
     }
