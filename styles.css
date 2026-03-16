@@ -54,6 +54,27 @@ a:hover { color: #fff; }
 
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
+/* --- Classification Bar --- */
+.classification-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 0;
+    background: rgba(0, 229, 255, 0.12);
+    color: var(--accent-dim);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+    line-height: 1.4;
+    user-select: none;
+    pointer-events: none;
+}
+
 /* ================ MATRIX RAIN CANVAS ================ */
 #matrix-rain {
     position: fixed;
@@ -197,7 +218,7 @@ body:hover #cursor-glow { opacity: 1; }
 /* --- Top Navigation --- */
 .top-bar {
     position: fixed;
-    top: 0;
+    top: 22px;
     left: 0;
     right: 0;
     z-index: 1000;
@@ -219,7 +240,7 @@ body:hover #cursor-glow { opacity: 1; }
 
 .logo-area { display: flex; align-items: center; gap: 12px; }
 
-.logo-img { height: 72px; width: auto; border-radius: 8px; }
+.logo-img { height: 72px; width: auto; max-width: 200px; border-radius: 8px; object-fit: contain; }
 
 .logo-text-fancy {
     font-family: 'Orbitron', sans-serif;
@@ -238,10 +259,12 @@ body:hover #cursor-glow { opacity: 1; }
 .top-bar-right-logo {
     height: 66px;
     width: auto;
+    max-width: 200px;
     border-radius: 8px;
     margin-left: 12px;
     opacity: 0.85;
     transition: opacity 0.3s ease;
+    object-fit: contain;
 }
 .top-bar-right-logo:hover { opacity: 1; }
 
@@ -450,10 +473,12 @@ body:hover #cursor-glow { opacity: 1; }
 .hero-main-logo {
     width: clamp(360px, 48vw, 675px);
     height: auto;
+    max-height: 300px;
     filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.3)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
     transition: filter 0.4s ease, transform 0.4s ease;
     border-radius: 20px;
     animation: hero-logo-pulse 4s ease-in-out infinite;
+    object-fit: contain;
 }
 .hero-main-logo:hover {
     filter: drop-shadow(0 0 50px rgba(0, 229, 255, 0.5)) drop-shadow(0 4px 20px rgba(0, 0, 0, 0.6));
@@ -1120,6 +1145,33 @@ body:hover #cursor-glow { opacity: 1; }
 .btn-danger:hover { opacity: 0.85; }
 
 /* --- Project Cards --- */
+.projects-grid-wrapper {
+    max-height: none;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+.projects-grid-wrapper.collapsed {
+    max-height: var(--projects-collapsed-height, 1200px);
+}
+.projects-show-more {
+    display: none;
+    margin: 20px auto 0;
+    padding: 8px 28px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.projects-show-more:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: var(--accent);
+}
+.projects-show-more.visible { display: block; }
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1629,6 +1681,49 @@ footer {
 .toast.success { background: rgba(0, 200, 83, 0.9); }
 .toast.error { background: rgba(255, 82, 82, 0.9); }
 @keyframes toast-in { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* --- Help Widget --- */
+.help-widget {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: rgba(14, 20, 32, 0.92);
+    border: 1px solid var(--accent-dim);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 900;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.15), var(--shadow-lg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, border-color var(--transition), box-shadow var(--transition);
+}
+.help-widget.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.help-widget:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.25), var(--shadow-lg);
+    background: rgba(14, 20, 32, 0.98);
+}
+.help-widget-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+.help-widget-text {
+    white-space: nowrap;
+}
 
 /* --- Responsive --- */
 @media (max-width: 768px) {

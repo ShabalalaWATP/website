@@ -6,9 +6,12 @@
     <title>E.S.T — Engineering Support Troop</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="EST.png" type="image/png" id="favicon-link">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/@fontsource/orbitron/index.css">
 </head>
 <body>
+    <!-- ===================== CLASSIFICATION BAR ===================== -->
+    <div id="classification-bar" class="classification-bar">OFFICIAL</div>
+
     <!-- ===================== MATRIX RAIN CANVAS ===================== -->
     <canvas id="matrix-rain"></canvas>
 
@@ -29,8 +32,8 @@
         <ul class="nav-links">
             <li><a href="#who-we-are">About</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="#org-structure">Team Structure</a></li>
             <li><a href="#front-door">Front Door</a></li>
+            <li><a href="#org-structure">Team Structure</a></li>
             <li><a href="#where-we-sit">Where We Sit</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#successes">Successes</a></li>
@@ -80,16 +83,6 @@
         </div>
     </section>
 
-    <!-- ===================== ORG STRUCTURE ===================== -->
-    <section id="org-structure" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title" data-title-key="orgStructure"></h2>
-            <div class="org-chart" id="org-chart">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </section>
-
     <!-- ===================== FRONT DOOR PORTAL ===================== -->
     <section id="front-door" class="section">
         <div class="container">
@@ -113,6 +106,16 @@
         </div>
     </section>
 
+    <!-- ===================== ORG STRUCTURE ===================== -->
+    <section id="org-structure" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-title-key="orgStructure"></h2>
+            <div class="org-chart" id="org-chart">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
     <!-- ===================== WHERE WE SIT ===================== -->
     <section id="where-we-sit" class="section section-alt">
         <div class="container">
@@ -129,9 +132,12 @@
     <section id="projects" class="section section-alt">
         <div class="container">
             <h2 class="section-title" data-title-key="projects"></h2>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Populated by JS -->
+            <div class="projects-grid-wrapper" id="projects-grid-wrapper">
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Populated by JS -->
+                </div>
             </div>
+            <button class="projects-show-more" id="projects-show-more">Show More ▾</button>
         </div>
     </section>
 
@@ -352,6 +358,11 @@
                     </div>
                     <input type="text" id="setting-right-logo" class="admin-input" placeholder="O3.png" style="font-size:0.8rem">
                 </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">Classification Bar</h4>
+                <div class="form-group">
+                    <label>Classification Text</label>
+                    <input type="text" id="setting-classification-text" class="admin-input" placeholder="OFFICIAL">
+                </div>
                 <h4 style="margin:24px 0 12px;color:var(--accent)">General</h4>
                 <div class="form-group">
                     <label>Page Title (browser tab)</label>
@@ -411,7 +422,13 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- ===================== HELP WIDGET ===================== -->
+    <div id="help-widget" class="help-widget">
+        <span class="help-widget-icon">&#128172;</span>
+        <span class="help-widget-text">Need our help? Click here</span>
+    </div>
+
+    <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>

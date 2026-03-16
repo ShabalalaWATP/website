@@ -23,6 +23,7 @@ const DEFAULT_DATA = {
         orgLabelMiddle: "Project Management",
         orgLabelBottom: "Tech Leads",
         orgLabelResources: "Team Resources",
+        classificationText: "OFFICIAL",
         terminalPrompt: "root@est:~$",
         typewriterPhrases: "initialising vulnerability scanner...\nloading exploit frameworks...\nconnecting to target environment...\nreverse engineering binary...\nanalysing attack surface...\nscanning for zero-days...\ndecompiling APK payload...\nmapping network topology..."
     },
@@ -218,6 +219,41 @@ const DEFAULT_DATA = {
             description: "Security assessment of an IoT device ecosystem including firmware extraction, embedded Linux analysis, Bluetooth Low Energy protocol assessment, and cloud API backend testing across the full device communication stack.",
             status: "planning",
             tags: ["IoT", "Firmware", "Linux"]
+        },
+        {
+            id: "p7",
+            name: "Project WRAITH",
+            description: "Deep-dive into a SCADA/ICS control system deployed across energy sector sites. Assessing PLC firmware integrity, Modbus/TCP protocol weaknesses, and HMI web interface vulnerabilities to identify attack paths from corporate network to operational technology environments.",
+            status: "active",
+            tags: ["SCADA", "IoT", "Penetration Testing"]
+        },
+        {
+            id: "p8",
+            name: "Project BASILISK",
+            description: "Targeted reverse engineering and exploit development against a custom Linux-based VPN appliance used across government networks. Focus on cryptographic implementation flaws, authentication bypass, and remote code execution through the management API.",
+            status: "active",
+            tags: ["Linux", "Reverse Engineering", "Cryptography"]
+        },
+        {
+            id: "p9",
+            name: "Project CHIMERA",
+            description: "Multi-vector security assessment of a hybrid cloud/on-premise Active Directory environment. Evaluating trust relationships, Kerberos delegation paths, NTLM relay attack surfaces, and Group Policy misconfigurations to map full compromise chains from external foothold to domain dominance.",
+            status: "planning",
+            tags: ["Windows", "Active Directory", "Penetration Testing"]
+        },
+        {
+            id: "p10",
+            name: "Project SPECTRE",
+            description: "In-depth security review of a classified mobile device management platform. Analysing enrolment flows, certificate provisioning, remote wipe mechanisms, and policy enforcement to identify weaknesses that could allow an adversary to bypass device controls or intercept managed communications.",
+            status: "active",
+            tags: ["Android", "MDM", "Code Review"]
+        },
+        {
+            id: "p11",
+            name: "Project HORIZON",
+            description: "Comprehensive assessment of a next-generation web-based command and control dashboard used for operational coordination. Testing covers authentication, role-based access controls, WebSocket communication channels, and server-side rendering injection vectors.",
+            status: "review",
+            tags: ["Web App", "Penetration Testing", "Auth Bypass"]
         }
     ],
 
@@ -283,7 +319,10 @@ const DEFAULT_DATA = {
         { id: "pp12", name: "Project NOVA", description: "Zero-day research programme for mobile platforms", link: "https://confluence.organisation.com/display/ESEC/NOVA", tags: ["Android", "Vulnerability Research", "Exploit Dev"] },
         { id: "pp13", name: "Project PHOENIX", description: "Incident response tooling development and deployment", link: "https://confluence.organisation.com/display/ESEC/PHOENIX", tags: ["Threat Intel", "Automation"] },
         { id: "pp14", name: "Project STORM", description: "API gateway security assessment for financial platform", link: "https://confluence.organisation.com/display/ESEC/STORM", tags: ["API", "Web App", "Penetration Testing"] },
-        { id: "pp15", name: "Project APEX", description: "Red team simulation against enterprise SOC capabilities", link: "https://confluence.organisation.com/display/ESEC/APEX", tags: ["Red Team", "Penetration Testing", "Windows"] }
+        { id: "pp15", name: "Project APEX", description: "Red team simulation against enterprise SOC capabilities", link: "https://confluence.organisation.com/display/ESEC/APEX", tags: ["Red Team", "Penetration Testing", "Windows"] },
+        { id: "pp16", name: "Project MINOTAUR", description: "Firmware integrity analysis of military-grade GPS receivers", link: "https://confluence.organisation.com/display/ESEC/MINOTAUR", tags: ["Firmware", "Reverse Engineering", "IoT"] },
+        { id: "pp17", name: "Project CIPHER", description: "Cryptographic protocol review of a bespoke secure communications platform", link: "https://confluence.organisation.com/display/ESEC/CIPHER", tags: ["Code Review", "Reverse Engineering"] },
+        { id: "pp18", name: "Project KRAKEN", description: "Cloud-native container escape research and Kubernetes cluster exploitation", link: "https://confluence.organisation.com/display/ESEC/KRAKEN", tags: ["Cloud", "Linux", "Exploit Dev"] }
     ],
 
     // ---- Statistics ----
@@ -348,6 +387,15 @@ function getSiteData() {
             const defaults = JSON.parse(JSON.stringify(DEFAULT_DATA));
             Object.keys(defaults).forEach(key => {
                 if (!(key in parsed)) parsed[key] = defaults[key];
+            });
+            // Merge in new default projects/previousProjects by id
+            ['projects', 'previousProjects'].forEach(key => {
+                if (Array.isArray(defaults[key]) && Array.isArray(parsed[key])) {
+                    const existingIds = new Set(parsed[key].map(item => item.id));
+                    defaults[key].forEach(item => {
+                        if (!existingIds.has(item.id)) parsed[key].push(item);
+                    });
+                }
             });
             return parsed;
         } catch {

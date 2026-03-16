@@ -214,6 +214,8 @@
         const subEl = document.getElementById('hero-subtitle');
         const tagsEl = document.getElementById('hero-tags');
         document.title = data.settings.pageTitle || 'E.S.T — Engineering Support Troop';
+        const classBar = document.getElementById('classification-bar');
+        if (classBar) classBar.textContent = data.settings.classificationText || 'OFFICIAL';
         if (subEl) subEl.textContent = h.subtitle || '';
         if (tagsEl) tagsEl.innerHTML = (h.tags || []).map((t, i) => `<span class="tag" style="--delay:${i}">${escHtml(t)}</span>`).join('');
         // Update logo sources from settings (supports uploaded base64 logos)
@@ -361,6 +363,8 @@
         chain.innerHTML = html;
     }
 
+    const PROJECTS_VISIBLE = 6;
+
     function renderProjects() {
         document.getElementById('projects-grid').innerHTML = data.projects.map(p => {
             const sc = p.status === 'active' ? 'status-active' : p.status === 'planning' ? 'status-planning' : 'status-review';
@@ -368,7 +372,57 @@
             const inner = `<span class="project-status ${sc}">${escHtml(p.status)}</span><h4>${escHtml(p.name)}</h4>${pmLine}<p>${escHtml(p.description)}</p><div class="project-tags">${(p.tags || []).map(t => `<span class="project-tag">${escHtml(t)}</span>`).join('')}</div>`;
             return p.link && p.link !== '#' ? `<a class="project-card project-card-link" href="${escHtml(p.link)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="project-card">${inner}</div>`;
         }).join('');
+        initProjectsCollapse();
     }
+
+    function initProjectsCollapse() {
+        const wrapper = document.getElementById('projects-grid-wrapper');
+        const btn = document.getElementById('projects-show-more');
+        const grid = document.getElementById('projects-grid');
+        if (!wrapper || !btn || !grid) return;
+        const cards = grid.querySelectorAll('.project-card, .project-card-link');
+        if (cards.length <= PROJECTS_VISIBLE) {
+            wrapper.classList.remove('collapsed');
+            btn.classList.remove('visible');
+            return;
+        }
+        // Calculate height to show first N cards
+        requestAnimationFrame(() => {
+            const gridGap = 24;
+            const cols = Math.max(1, Math.floor(grid.clientWidth / 324));
+            const rows = Math.ceil(PROJECTS_VISIBLE / cols);
+            let height = 0;
+            for (let i = 0; i < Math.min(rows * cols, cards.length); i++) {
+                const row = Math.floor(i / cols);
+                if (row < rows) {
+                    const cardH = cards[i].offsetHeight;
+                    if (i % cols === 0) height += cardH + gridGap;
+                }
+            }
+            wrapper.style.setProperty('--projects-collapsed-height', height + 'px');
+            wrapper.classList.add('collapsed');
+            btn.classList.add('visible');
+            btn.textContent = 'Show More ▾';
+        });
+    }
+
+    document.getElementById('projects-show-more').addEventListener('click', function () {
+        const wrapper = document.getElementById('projects-grid-wrapper');
+        const isCollapsed = wrapper.classList.contains('collapsed');
+        if (isCollapsed) {
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            wrapper.classList.remove('collapsed');
+            this.textContent = 'Show Less ▴';
+            setTimeout(() => { wrapper.style.maxHeight = 'none'; }, 500);
+        } else {
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            requestAnimationFrame(() => {
+                wrapper.classList.add('collapsed');
+                wrapper.style.maxHeight = '';
+                this.textContent = 'Show More ▾';
+            });
+        }
+    });
 
     function renderSuccesses() {
         const grid = document.getElementById('successes-grid');
@@ -420,14 +474,16 @@
         if (engagementChart) engagementChart.destroy();
         const e = document.getElementById('engagement-chart');
         if (e && tagLabels.length) {
-            // Dynamically size container so every tag bar is visible
+            // Dynamically size container — match doughnut chart height when possible
             const barHeight = 36;
-            const minHeight = tagLabels.length * barHeight + 40;
-            e.parentElement.style.minHeight = minHeight + 'px';
+            const doughnutContainer = document.getElementById('platform-chart') && document.getElementById('platform-chart').closest('.chart-container');
+            const targetHeight = doughnutContainer ? doughnutContainer.offsetHeight : 600;
+            const minHeight = Math.min(tagLabels.length * barHeight + 40, Math.max(targetHeight, 400));
+            e.parentElement.style.height = minHeight + 'px';
             engagementChart = new Chart(e.getContext('2d'), {
                 type: 'bar',
                 data: { labels: tagLabels, datasets: [{ data: tagValues, backgroundColor: cols.slice(0, tagLabels.length), borderRadius: 8, borderSkipped: false }] },
-                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', animation: { duration: 1200 }, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#5a6478' }, grid: { color: 'rgba(30,42,62,0.5)' } }, y: { ticks: { color: '#8892a4', font: { size: 11 } }, grid: { display: false } } } }
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', animation: { duration: 1200 }, plugins: { legend: { display: false } }, scales: { x: { suggestedMax: Math.max(Math.ceil(Math.max(...tagValues) * 1.2), 15), ticks: { color: '#5a6478', stepSize: 1 }, grid: { color: 'rgba(30,42,62,0.5)' } }, y: { ticks: { color: '#8892a4', font: { size: 11 } }, grid: { display: false } } } }
             });
         }
     }
@@ -806,6 +862,7 @@
         document.getElementById('setting-top-bar-logo-preview').src = topSrc;
         document.getElementById('setting-hero-logo-preview').src = heroSrc;
         document.getElementById('setting-right-logo-preview').src = rightSrc;
+        document.getElementById('setting-classification-text').value = data.settings.classificationText || 'OFFICIAL';
         document.getElementById('setting-page-title').value = data.settings.pageTitle || '';
         document.getElementById('setting-email').value = data.settings.frontDoorEmail;
         document.getElementById('setting-email-subject').value = data.settings.frontDoorEmailSubject || '';
@@ -869,6 +926,7 @@
         data.settings.topBarLogo = document.getElementById('setting-top-bar-logo').value.trim() || 'EST.png';
         data.settings.heroLogo = document.getElementById('setting-hero-logo').value.trim() || 'EST.png';
         data.settings.topBarRightLogo = document.getElementById('setting-right-logo').value.trim() || 'O3.png';
+        data.settings.classificationText = document.getElementById('setting-classification-text').value.trim() || 'OFFICIAL';
         data.settings.pageTitle = document.getElementById('setting-page-title').value.trim();
         data.settings.frontDoorEmail = document.getElementById('setting-email').value;
         data.settings.frontDoorEmailSubject = document.getElementById('setting-email-subject').value;
@@ -900,6 +958,29 @@
             if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.querySelector('.nav-links').classList.remove('open'); }
         });
     });
+
+    // ---- Help Widget (show near top of page, scroll to Front Door) ----
+    (function initHelpWidget() {
+        const widget = document.getElementById('help-widget');
+        const frontDoor = document.getElementById('front-door');
+        if (!widget || !frontDoor) return;
+
+        function updateWidget() {
+            const showThreshold = window.innerHeight * 0.5;
+            if (window.scrollY < showThreshold) {
+                widget.classList.add('visible');
+            } else {
+                widget.classList.remove('visible');
+            }
+        }
+
+        window.addEventListener('scroll', updateWidget, { passive: true });
+        updateWidget();
+
+        widget.addEventListener('click', function () {
+            frontDoor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    })();
 
     // ---- Init ----
     renderAll();
