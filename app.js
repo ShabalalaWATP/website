@@ -147,7 +147,14 @@
     function initTypewriter() {
         const el = document.getElementById('typewriter-text');
         if (!el) return;
-        const phrases = ['initialising vulnerability scanner...','loading exploit frameworks...','connecting to target environment...','reverse engineering binary...','analysing attack surface...','scanning for zero-days...','decompiling APK payload...','mapping network topology...'];
+        const s = data.settings || {};
+        // Read phrases from settings (newline-separated) or fall back to defaults
+        const rawPhrases = s.typewriterPhrases || 'initialising vulnerability scanner...\nloading exploit frameworks...\nconnecting to target environment...\nreverse engineering binary...\nanalysing attack surface...\nscanning for zero-days...\ndecompiling APK payload...\nmapping network topology...';
+        const phrases = rawPhrases.split('\n').map(p => p.trim()).filter(Boolean);
+        if (!phrases.length) return;
+        // Update the terminal prompt from settings
+        const promptEl = document.querySelector('.terminal-prompt');
+        if (promptEl && s.terminalPrompt) promptEl.textContent = s.terminalPrompt;
         let pi = 0, ci = 0, del = false;
         (function type() {
             const cur = phrases[pi];
@@ -195,7 +202,7 @@
 
     function getLogoSrc(key) {
         // Check for uploaded base64 logo first, then fall back to filename
-        const uploaded = localStorage.getItem('esector_logo_' + key);
+        const uploaded = localStorage.getItem('est_logo_' + key);
         if (uploaded) return uploaded;
         ensureSettings();
         return data.settings[key] || 'EST.png';
@@ -314,7 +321,7 @@
         const portalBtn = document.getElementById('front-door-portal-btn');
         const email = data.settings.frontDoorEmail;
         const emailSubject = encodeURIComponent(data.settings.frontDoorEmailSubject || 'VRED Service Request - [Project Name]');
-        const emailBody = encodeURIComponent(data.settings.frontDoorEmailBody || 'Hi E Sector Team,\n\nI would like to request your services.');
+        const emailBody = encodeURIComponent(data.settings.frontDoorEmailBody || 'Hi E.S.T Team,\n\nI would like to request your services.');
         emailBtn.href = `mailto:${email}?subject=${emailSubject}&body=${emailBody}`;
         const portalUrl = data.settings.frontDoorPortalUrl || '#';
         portalBtn.href = portalUrl;
@@ -805,6 +812,8 @@
         document.getElementById('setting-org-label-middle').value = data.settings.orgLabelMiddle || 'Project Management';
         document.getElementById('setting-org-label-bottom').value = data.settings.orgLabelBottom || 'Tech Leads';
         document.getElementById('setting-org-label-resources').value = data.settings.orgLabelResources || 'Team Resources';
+        document.getElementById('setting-terminal-prompt').value = data.settings.terminalPrompt || 'root@est:~$';
+        document.getElementById('setting-typewriter-phrases').value = data.settings.typewriterPhrases || 'initialising vulnerability scanner...\nloading exploit frameworks...\nconnecting to target environment...\nreverse engineering binary...\nanalysing attack surface...\nscanning for zero-days...\ndecompiling APK payload...\nmapping network topology...';
         document.getElementById('setting-admin-user').value = data.settings.adminUser;
         document.getElementById('setting-admin-pass').value = data.settings.adminPass;
     }
@@ -820,7 +829,7 @@
             const reader = new FileReader();
             reader.onload = (ev) => {
                 const dataUrl = ev.target.result;
-                localStorage.setItem('esector_logo_' + settingKey, dataUrl);
+                localStorage.setItem('est_logo_' + settingKey, dataUrl);
                 document.getElementById(previewId).src = dataUrl;
                 toast('Logo uploaded! Click Save Settings to apply.');
             };
@@ -833,19 +842,19 @@
 
     // Reset logo buttons
     document.getElementById('reset-top-bar-logo').addEventListener('click', () => {
-        localStorage.removeItem('esector_logo_topBarLogo');
+        localStorage.removeItem('est_logo_topBarLogo');
         document.getElementById('setting-top-bar-logo').value = 'EST.png';
         document.getElementById('setting-top-bar-logo-preview').src = 'EST.png';
         toast('Top bar logo reset to default');
     });
     document.getElementById('reset-hero-logo').addEventListener('click', () => {
-        localStorage.removeItem('esector_logo_heroLogo');
+        localStorage.removeItem('est_logo_heroLogo');
         document.getElementById('setting-hero-logo').value = 'EST.png';
         document.getElementById('setting-hero-logo-preview').src = 'EST.png';
         toast('Hero logo reset to default');
     });
     document.getElementById('reset-right-logo').addEventListener('click', () => {
-        localStorage.removeItem('esector_logo_topBarRightLogo');
+        localStorage.removeItem('est_logo_topBarRightLogo');
         document.getElementById('setting-right-logo').value = 'O3.png';
         document.getElementById('setting-right-logo-preview').src = 'O3.png';
         toast('Right logo reset to default');
@@ -866,9 +875,15 @@
         data.settings.orgLabelMiddle = document.getElementById('setting-org-label-middle').value.trim();
         data.settings.orgLabelBottom = document.getElementById('setting-org-label-bottom').value.trim();
         data.settings.orgLabelResources = document.getElementById('setting-org-label-resources').value.trim();
+        data.settings.terminalPrompt = document.getElementById('setting-terminal-prompt').value.trim() || 'root@est:~$';
+        data.settings.typewriterPhrases = document.getElementById('setting-typewriter-phrases').value;
         data.settings.adminUser = document.getElementById('setting-admin-user').value;
         data.settings.adminPass = document.getElementById('setting-admin-pass').value;
-        saveSiteData(data); renderHero(); renderFrontDoor(); renderWhereWeSit(); renderOrgChart(); toast('Settings saved');
+        saveSiteData(data); renderHero(); renderFrontDoor(); renderWhereWeSit(); renderOrgChart();
+        // Update terminal prompt live
+        const promptEl = document.querySelector('.terminal-prompt');
+        if (promptEl) promptEl.textContent = data.settings.terminalPrompt;
+        toast('Settings saved');
     });
 
     // ---- Smooth scroll for nav links ----

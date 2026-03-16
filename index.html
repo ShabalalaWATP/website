@@ -48,7 +48,7 @@
         <div class="hero-grid-bg"></div>
         <div class="hero-content">
             <div class="hero-terminal-line">
-                <span class="terminal-prompt">root@esector:~$</span>
+                <span class="terminal-prompt">root@est:~$</span>
                 <span class="typewriter" id="typewriter-text"></span>
                 <span class="cursor-blink">|</span>
             </div>
@@ -387,6 +387,15 @@
                 <div class="form-row">
                     <div class="form-group"><label>Bottom Row Label</label><input type="text" id="setting-org-label-bottom" class="admin-input" placeholder="Tech Leads"></div>
                     <div class="form-group"><label>Resources Label</label><input type="text" id="setting-org-label-resources" class="admin-input" placeholder="Team Resources"></div>
+                </div>
+                <h4 style="margin:24px 0 12px;color:var(--accent)">Terminal / Typewriter</h4>
+                <div class="form-group">
+                    <label>Terminal Prompt</label>
+                    <input type="text" id="setting-terminal-prompt" class="admin-input" placeholder="root@est:~$">
+                </div>
+                <div class="form-group">
+                    <label>Typewriter Phrases (one per line)</label>
+                    <textarea id="setting-typewriter-phrases" class="admin-input" rows="8" placeholder="initialising vulnerability scanner...&#10;loading exploit frameworks...&#10;connecting to target environment..."></textarea>
                 </div>
                 <h4 style="margin:24px 0 12px;color:var(--accent)">Admin Credentials</h4>
                 <div class="form-group">

@@ -9,10 +9,10 @@ const DEFAULT_DATA = {
     // ---- Settings ----
     settings: {
         pageTitle: "E.S.T — Engineering Support Troop",
-        frontDoorEmail: "esector-frontdoor@organisation.com",
+        frontDoorEmail: "est-frontdoor@organisation.com",
         frontDoorPortalUrl: "#",
         frontDoorEmailSubject: "VRED Service Request - [Project Name]",
-        frontDoorEmailBody: "Hi E Sector Team,\n\nI would like to request your services.",
+        frontDoorEmailBody: "Hi E.S.T Team,\n\nI would like to request your services.",
         youAreHereBadge: "You are here",
         adminUser: "admin54321",
         adminPass: "admin12345",
@@ -22,7 +22,9 @@ const DEFAULT_DATA = {
         orgLabelTop: "Sector Leads",
         orgLabelMiddle: "Project Management",
         orgLabelBottom: "Tech Leads",
-        orgLabelResources: "Team Resources"
+        orgLabelResources: "Team Resources",
+        terminalPrompt: "root@est:~$",
+        typewriterPhrases: "initialising vulnerability scanner...\nloading exploit frameworks...\nconnecting to target environment...\nreverse engineering binary...\nanalysing attack surface...\nscanning for zero-days...\ndecompiling APK payload...\nmapping network topology..."
     },
 
     // ---- Hero / Banner ----
@@ -34,7 +36,7 @@ const DEFAULT_DATA = {
 
     // ---- Who We Are ----
     whoWeAre: {
-        paragraph: "E Sector is a specialist Vulnerability Research, Reverse Engineering, and Exploit Development (VRED) team operating in direct support of business priorities. We combine deep technical expertise with operational understanding to identify, analyse, and demonstrate real-world risk across a broad technology landscape \u2014 from Android and iOS applications to Windows and Linux operating systems, web platforms, IoT firmware, and bespoke software stacks. Our mission is to ensure that the most critical attack surfaces are assessed first, and that every finding translates directly into actionable intelligence for stakeholders and decision-makers."
+        paragraph: "E.S.T is a specialist Vulnerability Research, Reverse Engineering, and Exploit Development (VRED) team operating in direct support of business priorities. We combine deep technical expertise with operational understanding to identify, analyse, and demonstrate real-world risk across a broad technology landscape \u2014 from Android and iOS applications to Windows and Linux operating systems, web platforms, IoT firmware, and bespoke software stacks. Our mission is to ensure that the most critical attack surfaces are assessed first, and that every finding translates directly into actionable intelligence for stakeholders and decision-makers."
     },
 
     // ---- Services We Offer ----
@@ -43,26 +45,26 @@ const DEFAULT_DATA = {
             id: "svc1",
             icon: "&#128270;",
             title: "Software Vulnerability Research",
-            description: "E Sector conducts deep-dive vulnerability research across a broad technology landscape. Our analysts identify zero-day vulnerabilities, logic flaws, memory corruption issues, and authentication bypasses within Android applications, web platforms, Windows & Linux operating systems, and bespoke software stacks. Every engagement is driven by business priorities \u2014 ensuring the most critical attack surfaces are assessed first and that findings translate directly into actionable intelligence for stakeholders."
+            description: "E.S.T conducts deep-dive vulnerability research across a broad technology landscape. Our analysts identify zero-day vulnerabilities, logic flaws, memory corruption issues, and authentication bypasses within Android applications, web platforms, Windows & Linux operating systems, and bespoke software stacks. Every engagement is driven by business priorities \u2014 ensuring the most critical attack surfaces are assessed first and that findings translate directly into actionable intelligence for stakeholders."
         },
         {
             id: "svc2",
             icon: "&#128295;",
             title: "Software Reverse Engineering",
-            description: "Our reverse engineering capability dissects compiled binaries, obfuscated mobile applications, firmware images, and network protocols to understand how software truly operates beneath the surface. Using industry-leading tools and custom-built frameworks, E Sector transforms opaque targets into transparent, well-understood systems \u2014 enabling informed decision-making, capability development, and rapid response to emerging threats across all supported platforms."
+            description: "Our reverse engineering capability dissects compiled binaries, obfuscated mobile applications, firmware images, and network protocols to understand how software truly operates beneath the surface. Using industry-leading tools and custom-built frameworks, E.S.T transforms opaque targets into transparent, well-understood systems \u2014 enabling informed decision-making, capability development, and rapid response to emerging threats across all supported platforms."
         },
         {
             id: "svc3",
             icon: "&#9889;",
             title: "Exploit Development",
-            description: "When vulnerabilities are discovered, E Sector\u2019s exploit development team transforms theoretical weaknesses into reliable, demonstrable proof-of-concept capabilities. From browser-based exploitation chains and Android privilege escalation to kernel-level attacks on Windows and Linux, our developers craft sophisticated tooling that validates risk, proves impact, and directly supports business objectives. All work is conducted within strict governance frameworks ensuring responsible handling and operational security."
+            description: "When vulnerabilities are discovered, E.S.T\u2019s exploit development team transforms theoretical weaknesses into reliable, demonstrable proof-of-concept capabilities. From browser-based exploitation chains and Android privilege escalation to kernel-level attacks on Windows and Linux, our developers craft sophisticated tooling that validates risk, proves impact, and directly supports business objectives. All work is conducted within strict governance frameworks ensuring responsible handling and operational security."
         }
     ],
 
     // ---- Front Door Content ----
     frontDoor: {
         title: "Request Our Services",
-        description: "The VRED Front Door is your single point of entry for engaging E Sector. Whether you require a targeted vulnerability assessment, a reverse engineering deep-dive, or bespoke exploit development, all requests are triaged through our front door process to ensure appropriate resourcing, prioritisation, and alignment with business objectives.",
+        description: "The VRED Front Door is your single point of entry for engaging E.S.T. Whether you require a targeted vulnerability assessment, a reverse engineering deep-dive, or bespoke exploit development, all requests are triaged through our front door process to ensure appropriate resourcing, prioritisation, and alignment with business objectives.",
         steps: [
             "Submit your request via the Front Door email or portal link below",
             "Our project management team triages, scopes, and resources the engagement",
@@ -226,42 +228,42 @@ const DEFAULT_DATA = {
             title: "Critical Zero-Day in Defence Messaging Platform",
             date: "November 2025",
             summary: "Discovered a chain of three vulnerabilities in a widely-deployed defence messaging application that, when combined, allowed unauthenticated remote code execution on both client and server components.",
-            fullArticle: "<p>In November 2025, E Sector\u2019s vulnerability research team identified a critical chain of three previously unknown vulnerabilities within a messaging platform deployed across multiple defence organisations.</p><p>The research began with a routine static analysis of the application\u2019s Android APK, which revealed an insecure deserialization endpoint in the message parsing logic. Further investigation through dynamic instrumentation uncovered that the application\u2019s certificate pinning implementation could be bypassed through a subtle timing attack on the TLS handshake verification.</p><p>The third and most critical finding was a server-side template injection vulnerability in the message rendering engine that, when combined with the deserialization flaw, allowed an attacker to achieve unauthenticated remote code execution on both the client device and the backend message processing server.</p><p>E Sector developed a full proof-of-concept exploit chain demonstrating the impact, which was responsibly disclosed to the vendor. The findings led to an emergency patch cycle and a comprehensive security review of the entire platform architecture.</p>"
+            fullArticle: "<p>In November 2025, E.S.T\u2019s vulnerability research team identified a critical chain of three previously unknown vulnerabilities within a messaging platform deployed across multiple defence organisations.</p><p>The research began with a routine static analysis of the application\u2019s Android APK, which revealed an insecure deserialization endpoint in the message parsing logic. Further investigation through dynamic instrumentation uncovered that the application\u2019s certificate pinning implementation could be bypassed through a subtle timing attack on the TLS handshake verification.</p><p>The third and most critical finding was a server-side template injection vulnerability in the message rendering engine that, when combined with the deserialization flaw, allowed an attacker to achieve unauthenticated remote code execution on both the client device and the backend message processing server.</p><p>E.S.T developed a full proof-of-concept exploit chain demonstrating the impact, which was responsibly disclosed to the vendor. The findings led to an emergency patch cycle and a comprehensive security review of the entire platform architecture.</p>"
         },
         {
             id: "s2",
             title: "Windows Kernel Privilege Escalation \u2014 Enterprise Rollout Halted",
             date: "August 2025",
             summary: "Identified a privilege escalation vulnerability in a Windows kernel driver scheduled for enterprise-wide deployment, preventing a potential organisation-wide compromise.",
-            fullArticle: "<p>During a routine pre-deployment security assessment, E Sector\u2019s reverse engineering team discovered a critical use-after-free vulnerability in a custom Windows kernel driver that was scheduled for organisation-wide deployment.</p><p>The vulnerability existed in the driver\u2019s IOCTL handler, where a race condition between two concurrent device operations could lead to a dangling pointer dereference in kernel pool memory. Our exploit development team crafted a reliable proof-of-concept that demonstrated escalation from a standard user account to NT AUTHORITY\\SYSTEM in under 30 seconds.</p><p>The discovery was immediately escalated through the appropriate channels, resulting in the deployment being halted pending a full code review and remediation.</p>"
+            fullArticle: "<p>During a routine pre-deployment security assessment, E.S.T\u2019s reverse engineering team discovered a critical use-after-free vulnerability in a custom Windows kernel driver that was scheduled for organisation-wide deployment.</p><p>The vulnerability existed in the driver\u2019s IOCTL handler, where a race condition between two concurrent device operations could lead to a dangling pointer dereference in kernel pool memory. Our exploit development team crafted a reliable proof-of-concept that demonstrated escalation from a standard user account to NT AUTHORITY\\SYSTEM in under 30 seconds.</p><p>The discovery was immediately escalated through the appropriate channels, resulting in the deployment being halted pending a full code review and remediation.</p>"
         },
         {
             id: "s3",
             title: "Web Application Auth Bypass \u2014 Financial Data Exposure",
             date: "May 2025",
             summary: "Uncovered a critical authentication bypass in a financial reporting web application that exposed sensitive financial records of over 50,000 users through an IDOR combined with JWT manipulation.",
-            fullArticle: "<p>E Sector was engaged to conduct a security assessment of a financial reporting platform processing sensitive financial data. Our web application testing team identified a critical authentication bypass that combined two vulnerability classes to devastating effect.</p><p>The first finding was an Insecure Direct Object Reference (IDOR) in the user profile API endpoint. The second was a JWT token manipulation vulnerability where the application accepted tokens signed with the \u2018none\u2019 algorithm, effectively allowing any user to forge administrative tokens.</p><p>When combined, these vulnerabilities allowed an unauthenticated attacker to access financial records for the platform\u2019s entire user base of over 50,000 individuals.</p>"
+            fullArticle: "<p>E.S.T was engaged to conduct a security assessment of a financial reporting platform processing sensitive financial data. Our web application testing team identified a critical authentication bypass that combined two vulnerability classes to devastating effect.</p><p>The first finding was an Insecure Direct Object Reference (IDOR) in the user profile API endpoint. The second was a JWT token manipulation vulnerability where the application accepted tokens signed with the \u2018none\u2019 algorithm, effectively allowing any user to forge administrative tokens.</p><p>When combined, these vulnerabilities allowed an unauthenticated attacker to access financial records for the platform\u2019s entire user base of over 50,000 individuals.</p>"
         },
         {
             id: "s4",
             title: "APT Malware Reverse Engineering \u2014 Campaign Attribution",
             date: "February 2025",
             summary: "Conducted deep reverse engineering of a sophisticated multi-stage malware implant, leading to successful attribution of an advanced persistent threat campaign targeting critical national infrastructure.",
-            fullArticle: "<p>E Sector\u2019s reverse engineering capability was called upon to analyse a sophisticated piece of malware recovered from a compromised critical national infrastructure network. The implant exhibited advanced anti-analysis techniques including virtualised code, time-based execution guards, and environment-aware sandbox detection.</p><p>Over a three-week intensive analysis period, our team systematically defeated each anti-analysis layer, ultimately revealing a modular implant framework with capabilities including keylogging, screen capture, credential harvesting, and lateral movement.</p><p>Defensive signatures and YARA rules developed during this analysis were deployed across the organisation\u2019s detection infrastructure, leading to the identification of three additional compromised systems.</p>"
+            fullArticle: "<p>E.S.T\u2019s reverse engineering capability was called upon to analyse a sophisticated piece of malware recovered from a compromised critical national infrastructure network. The implant exhibited advanced anti-analysis techniques including virtualised code, time-based execution guards, and environment-aware sandbox detection.</p><p>Over a three-week intensive analysis period, our team systematically defeated each anti-analysis layer, ultimately revealing a modular implant framework with capabilities including keylogging, screen capture, credential harvesting, and lateral movement.</p><p>Defensive signatures and YARA rules developed during this analysis were deployed across the organisation\u2019s detection infrastructure, leading to the identification of three additional compromised systems.</p>"
         },
         {
             id: "s5",
             title: "Android Banking Trojan \u2014 Supply Chain Interception",
             date: "October 2024",
             summary: "Reverse engineered a trojanised Android SDK distributed through a legitimate developer library, preventing its integration into multiple production banking applications.",
-            fullArticle: "<p>E Sector identified a supply chain compromise affecting a widely-used Android development SDK distributed through a popular package repository. The trojanised library contained a dormant payload that would activate only when integrated into applications matching specific package name patterns \u2014 specifically targeting banking and financial applications.</p><p>The findings were reported to the package repository maintainers and affected banking application developers, leading to the removal of the compromised SDK and a coordinated advisory across the financial sector. An estimated 12 banking applications in active development were prevented from shipping with the compromised dependency.</p>"
+            fullArticle: "<p>E.S.T identified a supply chain compromise affecting a widely-used Android development SDK distributed through a popular package repository. The trojanised library contained a dormant payload that would activate only when integrated into applications matching specific package name patterns \u2014 specifically targeting banking and financial applications.</p><p>The findings were reported to the package repository maintainers and affected banking application developers, leading to the removal of the compromised SDK and a coordinated advisory across the financial sector. An estimated 12 banking applications in active development were prevented from shipping with the compromised dependency.</p>"
         },
         {
             id: "s6",
             title: "IoT Firmware Backdoor \u2014 Critical Infrastructure Protected",
             date: "July 2024",
             summary: "Discovered a hardcoded backdoor account in IoT gateway firmware deployed across critical infrastructure sites, enabling immediate remediation before exploitation.",
-            fullArticle: "<p>During a proactive firmware security assessment, E Sector\u2019s reverse engineering team extracted and analysed the firmware image from an IoT gateway device widely deployed across critical national infrastructure sites including energy and water utilities.</p><p>Deep analysis of the extracted filesystem revealed a hardcoded administrative account with a static password embedded in the device\u2019s web management interface. This backdoor, present since an early firmware version, would have granted an attacker full administrative control over any device reachable on the network \u2014 including the ability to modify sensor thresholds, disable alarms, and pivot into connected operational technology networks.</p><p>E Sector developed a proof-of-concept demonstrating remote exploitation across the network and coordinated responsible disclosure with the device manufacturer. An emergency firmware update was issued within 48 hours, and network-level mitigations were deployed across all affected sites within a week. Over 200 devices across 14 critical infrastructure sites were patched as a direct result of this finding.</p>"
+            fullArticle: "<p>During a proactive firmware security assessment, E.S.T\u2019s reverse engineering team extracted and analysed the firmware image from an IoT gateway device widely deployed across critical national infrastructure sites including energy and water utilities.</p><p>Deep analysis of the extracted filesystem revealed a hardcoded administrative account with a static password embedded in the device\u2019s web management interface. This backdoor, present since an early firmware version, would have granted an attacker full administrative control over any device reachable on the network \u2014 including the ability to modify sensor thresholds, disable alarms, and pivot into connected operational technology networks.</p><p>E.S.T developed a proof-of-concept demonstrating remote exploitation across the network and coordinated responsible disclosure with the device manufacturer. An emergency firmware update was issued within 48 hours, and network-level mitigations were deployed across all affected sites within a week. Over 200 devices across 14 critical infrastructure sites were patched as a direct result of this finding.</p>"
         }
     ],
 
@@ -313,7 +315,7 @@ const DEFAULT_DATA = {
 
     // ---- Important Links ----
     links: [
-        { id: "lk1", name: "Confluence", description: "E Sector documentation wiki", url: "https://confluence.organisation.com/display/ESEC", icon: "&#128214;" },
+        { id: "lk1", name: "Confluence", description: "E.S.T documentation wiki", url: "https://confluence.organisation.com/display/ESEC", icon: "&#128214;" },
         { id: "lk2", name: "Jira", description: "Project tracking & sprint board", url: "https://jira.organisation.com/browse/ESEC", icon: "&#128203;" },
         { id: "lk3", name: "Block Dopus", description: "Block Dopus platform", url: "https://blockdopus.organisation.com", icon: "&#128737;" },
         { id: "lk4", name: "O3 Confluence", description: "O3 documentation & resources", url: "https://confluence.organisation.com/display/O3", icon: "&#127760;" },
@@ -322,8 +324,23 @@ const DEFAULT_DATA = {
 };
 
 // ---- Data Access Layer ----
+// Migrate old localStorage keys once so existing installs keep their data
+(function migrateKeys() {
+    if (!localStorage.getItem('est_data') && localStorage.getItem('esector_data')) {
+        localStorage.setItem('est_data', localStorage.getItem('esector_data'));
+        localStorage.removeItem('esector_data');
+    }
+    ['topBarLogo', 'heroLogo', 'topBarRightLogo'].forEach(k => {
+        const old = 'esector_logo_' + k, nk = 'est_logo_' + k;
+        if (!localStorage.getItem(nk) && localStorage.getItem(old)) {
+            localStorage.setItem(nk, localStorage.getItem(old));
+            localStorage.removeItem(old);
+        }
+    });
+})();
+
 function getSiteData() {
-    const stored = localStorage.getItem('esector_data');
+    const stored = localStorage.getItem('est_data');
     if (stored) {
         try {
             const parsed = JSON.parse(stored);
@@ -341,9 +358,9 @@ function getSiteData() {
 }
 
 function saveSiteData(data) {
-    localStorage.setItem('esector_data', JSON.stringify(data));
+    localStorage.setItem('est_data', JSON.stringify(data));
 }
 
 function resetSiteData() {
-    localStorage.removeItem('esector_data');
+    localStorage.removeItem('est_data');
 }
