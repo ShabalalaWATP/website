@@ -1,6 +1,6 @@
 # E.S.T - Engineering Support Troop
 
-Internal team webpage for E Sector (VRED). A static site with a built-in admin panel that stores all configuration in the browser's localStorage.
+Internal team webpage for EST. A static site with a built-in admin panel that stores all configuration in the browser's localStorage.
 
 ## Quick Start (Development)
 
