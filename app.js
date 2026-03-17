@@ -302,7 +302,7 @@
             data.orgGroups.forEach(g => {
                 const tc = g.type === 'staff' ? '' : g.type === 'military' ? 'military' : g.type === 'contractor' ? 'contractor' : 'partner';
                 html += `<div class="org-node org-group-card ${tc}">`;
-                if (g.image) html += `<img src="${escHtml(g.image)}" alt="${escHtml(g.label)}" class="org-group-img">`;
+                if (g.image) html += `<img src="${g.image.startsWith('data:') ? g.image : escHtml(g.image)}" alt="${escHtml(g.label)}" class="org-group-img">`;
                 else html += `<div class="org-group-icon">${g.icon}</div>`;
                 html += `<div class="org-group-count">${g.count}</div><div class="org-name">${escHtml(g.label)}</div></div>`;
             });
@@ -354,7 +354,7 @@
             const isLast = i === items.length - 1;
             const cls = i === 0 ? 'org-chain-node org-chain-node-top' : isLast ? 'org-chain-node org-chain-node-current' : 'org-chain-node';
             html += `<div class="${cls}">`;
-            if (item.image) html += `<img src="${escHtml(item.image)}" alt="${escHtml(item.label)}" class="org-chain-img" onerror="this.style.display='none'">`;
+            if (item.image) html += `<img src="${item.image.startsWith('data:') ? item.image : escHtml(item.image)}" alt="${escHtml(item.label)}" class="org-chain-img" onerror="this.style.display='none'">`;
             html += `<span class="org-chain-label">${escHtml(item.label)}</span>`;
             if (isLast) html += `<span class="org-chain-badge">${escHtml(data.settings.youAreHereBadge || 'You are here')}</span>`;
             html += '</div>';
@@ -793,13 +793,23 @@
         list.innerHTML = data.whereWeSit.map((item, i) => {
             const isLast = i === data.whereWeSit.length - 1;
             const badge = isLast ? ' <span style="color:var(--accent);font-size:0.75rem">(You are here)</span>' : '';
-            return `<div class="admin-item-card"><div class="admin-item-header"><h4>${escHtml(item.label)}${badge}</h4><div class="admin-item-actions"><button class="btn btn-sm btn-secondary admin-edit-ws" data-index="${i}">Edit</button>${i > 0 ? `<button class="btn btn-sm btn-secondary admin-move-ws-up" data-index="${i}" title="Move left">&#9664;</button>` : ''}${i < data.whereWeSit.length - 1 ? `<button class="btn btn-sm btn-secondary admin-move-ws-down" data-index="${i}" title="Move right">&#9654;</button>` : ''}<button class="btn btn-sm btn-danger admin-del-ws" data-index="${i}">Delete</button></div></div><div class="admin-edit-form" id="edit-ws-${i}" style="display:none"><div class="form-group"><label>Label</label><input class="admin-input" value="${escHtml(item.label)}" data-field="label"></div><div class="form-group"><label>Image filename (e.g. fcdo.png)</label><input class="admin-input" value="${escHtml(item.image || '')}" data-field="image"></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">${item.image ? `<img src="${escHtml(item.image)}" style="height:40px;width:40px;object-fit:contain;border-radius:8px;background:var(--bg-glass);border:1px solid var(--border)" onerror="this.style.display='none'">` : ''}<span style="color:var(--text-muted);font-size:0.8rem">Place image file in site folder</span></div><button class="btn btn-sm btn-primary admin-save-ws" data-index="${i}">Save</button></div></div>`;
+            const imgSrc = item.image ? (item.image.startsWith('data:') ? item.image : escHtml(item.image)) : '';
+            return `<div class="admin-item-card"><div class="admin-item-header"><h4>${escHtml(item.label)}${badge}</h4><div class="admin-item-actions"><button class="btn btn-sm btn-secondary admin-edit-ws" data-index="${i}">Edit</button>${i > 0 ? `<button class="btn btn-sm btn-secondary admin-move-ws-up" data-index="${i}" title="Move left">&#9664;</button>` : ''}${i < data.whereWeSit.length - 1 ? `<button class="btn btn-sm btn-secondary admin-move-ws-down" data-index="${i}" title="Move right">&#9654;</button>` : ''}<button class="btn btn-sm btn-danger admin-del-ws" data-index="${i}">Delete</button></div></div><div class="admin-edit-form" id="edit-ws-${i}" style="display:none"><div class="form-group"><label>Label</label><input class="admin-input" value="${escHtml(item.label)}" data-field="label"></div><div class="form-group"><label>Image</label><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">${imgSrc ? `<img src="${imgSrc}" style="height:40px;width:40px;object-fit:contain;border-radius:8px;background:var(--bg-glass);border:1px solid var(--border)" onerror="this.style.display='none'">` : '<span style="color:var(--text-muted);font-size:0.8rem">No image</span>'}<input type="file" accept=".png" class="admin-ws-img-upload" data-index="${i}" style="font-size:0.8rem"><button type="button" class="btn btn-sm btn-secondary admin-ws-img-clear" data-index="${i}">Clear</button></div><input class="admin-input" value="${escHtml(item.image || '')}" data-field="image" placeholder="Or enter filename (e.g. fcdo.png)" id="ws-img-field-${i}"></div><button class="btn btn-sm btn-primary admin-save-ws" data-index="${i}">Save</button></div></div>`;
         }).join('');
         list.querySelectorAll('.admin-edit-ws').forEach(b => b.addEventListener('click', () => { const f = document.getElementById('edit-ws-' + b.dataset.index); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }));
         list.querySelectorAll('.admin-save-ws').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index), f = document.getElementById('edit-ws-' + i); f.querySelectorAll('[data-field]').forEach(inp => { data.whereWeSit[i][inp.dataset.field] = inp.value; }); saveSiteData(data); renderAdminWhereWeSit(); toast('Node updated'); }));
         list.querySelectorAll('.admin-del-ws').forEach(b => b.addEventListener('click', () => { if (!confirm('Delete this node?')) return; data.whereWeSit.splice(parseInt(b.dataset.index), 1); saveSiteData(data); renderAdminWhereWeSit(); toast('Node deleted'); }));
         list.querySelectorAll('.admin-move-ws-up').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index); if (i > 0) { [data.whereWeSit[i - 1], data.whereWeSit[i]] = [data.whereWeSit[i], data.whereWeSit[i - 1]]; saveSiteData(data); renderAdminWhereWeSit(); } }));
         list.querySelectorAll('.admin-move-ws-down').forEach(b => b.addEventListener('click', () => { const i = parseInt(b.dataset.index); if (i < data.whereWeSit.length - 1) { [data.whereWeSit[i], data.whereWeSit[i + 1]] = [data.whereWeSit[i + 1], data.whereWeSit[i]]; saveSiteData(data); renderAdminWhereWeSit(); } }));
+        list.querySelectorAll('.admin-ws-img-upload').forEach(inp => inp.addEventListener('change', (e) => {
+            const file = e.target.files[0]; if (!file) return;
+            if (!file.type.startsWith('image/png')) { toast('Please select a .png file'); return; }
+            const idx = parseInt(inp.dataset.index);
+            const reader = new FileReader();
+            reader.onload = (ev) => { const imgField = document.getElementById('ws-img-field-' + idx); if (imgField) imgField.value = ev.target.result; toast('Image loaded — click Save to apply'); };
+            reader.readAsDataURL(file);
+        }));
+        list.querySelectorAll('.admin-ws-img-clear').forEach(b => b.addEventListener('click', () => { const idx = parseInt(b.dataset.index); const imgField = document.getElementById('ws-img-field-' + idx); if (imgField) imgField.value = ''; toast('Image cleared — click Save to apply'); }));
     }
     document.getElementById('add-where-we-sit-btn').addEventListener('click', () => { if (!data.whereWeSit) data.whereWeSit = []; data.whereWeSit.push({ id: uid(), label: 'New Node', image: '' }); saveSiteData(data); renderAdminWhereWeSit(); toast('Node added'); });
 

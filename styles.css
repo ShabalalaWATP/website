@@ -238,9 +238,9 @@ body:hover #cursor-glow { opacity: 1; }
     box-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
 }
 
-.logo-area { display: flex; align-items: center; gap: 12px; }
+.logo-area { display: flex; align-items: center; gap: 12px; overflow: hidden; min-width: 0; }
 
-.logo-img { height: 72px; width: auto; max-width: 200px; border-radius: 8px; object-fit: contain; }
+.logo-img { height: 72px; width: auto; max-width: 200px; max-height: 72px; border-radius: 8px; object-fit: contain; display: block; }
 
 .logo-text-fancy {
     font-family: 'Orbitron', sans-serif;
@@ -260,11 +260,13 @@ body:hover #cursor-glow { opacity: 1; }
     height: 66px;
     width: auto;
     max-width: 200px;
+    max-height: 66px;
     border-radius: 8px;
     margin-left: 12px;
     opacity: 0.85;
     transition: opacity 0.3s ease;
     object-fit: contain;
+    display: block;
 }
 .top-bar-right-logo:hover { opacity: 1; }
 
@@ -469,9 +471,13 @@ body:hover #cursor-glow { opacity: 1; }
 /* Hero main logo — replaces E.S.T glitch text */
 .hero-main-logo-container {
     margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 675px;
+    max-height: 300px;
 }
 .hero-main-logo {
     width: clamp(360px, 48vw, 675px);
+    max-width: 675px;
     height: auto;
     max-height: 300px;
     filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.3)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
@@ -479,6 +485,7 @@ body:hover #cursor-glow { opacity: 1; }
     border-radius: 20px;
     animation: hero-logo-pulse 4s ease-in-out infinite;
     object-fit: contain;
+    display: block;
 }
 .hero-main-logo:hover {
     filter: drop-shadow(0 0 50px rgba(0, 229, 255, 0.5)) drop-shadow(0 4px 20px rgba(0, 0, 0, 0.6));
